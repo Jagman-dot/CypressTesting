@@ -1,30 +1,28 @@
 /// <reference types="Cypress" />
 
+describe("My First Test Suite", function () {
+  before(function () {
+    cy.fixture("example").then(function (data) {
+      this.data = data;
+    });
+  });
 
-describe('My First Test Suite', function(){
+  it("My FirstTest case", function () {
+    cy.visit("https://rahulshettyacademy.com/angularpractice/");
 
-    before(function(){
-        cy.fixture('example').then(function(data){
-            this.data = data;
-        })
-    })
+    cy.get("div[class='form-group'] input[name='name']").type(this.data.name);
+    cy.get("div[class='form-group'] input[name='name']").should(
+      "have.attr",
+      "minlength",
+      "2"
+    );
 
-    it('My FirstTest case', function(){ 
+    cy.get("select").select(this.data.gender);
+    cy.get("#inlineRadio3").should("be.disabled");
+    cy.get("a").contains("Shop").click();
 
-        cy.visit('https://rahulshettyacademy.com/angularpractice/')
-
-        cy.get("div[class='form-group'] input[name='name']").type(this.data.name)
-        cy.get("div[class='form-group'] input[name='name']").should('have.attr', 'minlength', '2')
-
-        cy.get('select').select(this.data.gender)
-        cy.get('#inlineRadio3').should('be.disabled')
-        cy.get('a').contains('Shop').click()
-
-        cy.selectProduct('Samsung Note 8')
-
-
-       
-    })
-
-
-})
+    this.data.productName.forEach((element) => {
+      cy.selectProduct(element);
+    });
+  });
+});
