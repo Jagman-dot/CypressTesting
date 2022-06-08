@@ -1,5 +1,6 @@
 {
-    "theme": "light",
-    "viewportWidth": 1000,
-    "viewportHeight": 1300
+	"theme": "light",
+	"viewportWidth": 1000,
+	"viewportHeight": 1300,
+	"defaultCommandTimeout": 5000
 }

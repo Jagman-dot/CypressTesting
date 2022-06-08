@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import HomePage from "../pageObjects/Homepage";
 
 describe("My First Test Suite", function () {
   before(function () {
@@ -10,19 +11,29 @@ describe("My First Test Suite", function () {
   it("My FirstTest case", function () {
     cy.visit("https://rahulshettyacademy.com/angularpractice/");
 
-    cy.get("div[class='form-group'] input[name='name']").type(this.data.name);
-    cy.get("div[class='form-group'] input[name='name']").should(
-      "have.attr",
-      "minlength",
-      "2"
-    );
+    const homepage = new HomePage();
 
-    cy.get("select").select(this.data.gender);
-    cy.get("#inlineRadio3").should("be.disabled");
-    cy.get("a").contains("Shop").click();
+    homepage.getName().type(this.data.name);
+    homepage.getName().should("have.attr", "minlength", "2");
+
+    homepage.getGender().select(this.data.gender);
+    homepage.getEntripreneaur().should("be.disabled");
+    homepage.getShopTab().click();
 
     this.data.productName.forEach((element) => {
       cy.selectProduct(element);
     });
+
+    cy.contains("Checkout").click();
+
+    cy.get(".btn.btn-success").click();
+
+    cy.get("#country").type("India");
+
+    cy.get(".suggestions > ul > li > a").click();
+
+    cy.get("#checkbox2").check();
+
+    //run time :24
   });
 });
