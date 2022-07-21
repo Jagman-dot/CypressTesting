@@ -32,7 +32,16 @@ describe("My First Test Suite", function () {
 
     cy.get(".suggestions > ul > li > a").click();
 
-    cy.get("#checkbox2").check();
+    cy.get("#checkbox2").click({ force: true });
+
+    cy.get(".ng-untouched > .btn").click();
+
+    cy.get(".alert").then((text) => {
+      const actualText = text.text();
+      expect(actualText).to.include(
+        "Success! Thank you! Your order will be delivered in next few weeks :-)."
+      );
+    });
 
     //run time :24
   });
